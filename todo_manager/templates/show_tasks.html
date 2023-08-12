@@ -1,0 +1,56 @@
+{% extends 'base.html' %} {% block content %}
+<div class="flex flex-col my-8 items-center justify-center">
+  <h1 class="text-3xl font-semibold mb-4">
+    Welcome to Daily Task Presentation
+  </h1>
+  <p class="text-gray-700">
+    This is a super management tools for decorating your daily works
+  </p>
+  <a class="px-4 py-2 bg-rose-500 text-white my-4" href="{% url 'home' %}">
+    Add another task
+  </a>
+</div>
+
+<table class="table-auto w-full border-collapse border rounded-lg">
+  <thead class="bg-gray-100">
+    <tr>
+      <th class="px-4 py-2 border">Title</th>
+      <th class="px-4 py-2 border">Description</th>
+      <th class="px-4 py-2 border">Completed</th>
+      <th class="px-4 py-2 border">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for task in tasks %}
+    <tr class="border">
+      <td class="px-4 py-2 border">{{ task.taskTitle }}</td>
+      <td class="px-4 py-2 border">{{ task.taskDescription }}</td>
+      <td class="px-4 py-2 border">
+        {{ task.is_completed|yesno:"Complete,Incomplete" }}
+      </td>
+      <td class="flex justify-center gap-4">
+        <a
+          class="px-4 py-2 bg-green-500 text-white"
+          href="{% url 'delete_task' task.pk %}"
+        >
+          Complete</a
+        >
+        <a
+          class="px-4 py-2 bg-gray-500 text-white"
+          href="{% url 'edit_task' task.pk %}"
+        >
+          Edit</a
+        >
+        <a
+          class="px-4 py-2 bg-red-500 text-white"
+          href="{% url 'delete_task' task.pk %}"
+        >
+          Delete</a
+        >
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
